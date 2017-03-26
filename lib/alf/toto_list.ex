@@ -32,8 +32,24 @@ defmodule Alf.TodoList do
 
   def complete(position) when is_integer(position) do
     Agent.get_and_update(@name, fn list ->
-      value = Map.get(list, position)
-      new_list = Map.drop(list, [position])
+      value = Map.get(list.items, position)
+      items = Map.delete(list.items, position)
+      new_list = %{list | items: items}
+
+      {value, new_list}
+    end)
+  end
+
+  def complete(desc) when is_binary(desc) do
+    Agent.get_and_update(@name, fn list ->
+      position = Map.values(list.items)
+               |> Enum.find_index(fn(x) -> x == desc end)
+               |> Kernel.+(1)
+
+      value = Map.get(list.items, position)
+      items = Map.delete(list.items, position)
+      new_list = %{list | items: items}
+
       {value, new_list}
     end)
   end

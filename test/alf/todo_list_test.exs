@@ -42,8 +42,7 @@ defmodule Alf.TodoListTest do
 
       TodoList.complete(2)
 
-      [last] = TodoList.last
-
+      [last] = TodoList.all
       assert last == "write docs"
     end
 
@@ -53,7 +52,20 @@ defmodule Alf.TodoListTest do
 
       TodoList.complete("write docs")
 
-      assert TodoList.last == "finish homework"
+      [last] = TodoList.all
+      assert last == "finish homework"
+    end
+
+    test "keeps number of elements in list correctly" do
+      TodoList.add("write docs")
+      TodoList.add("finish homework")
+      TodoList.complete(2)
+      TodoList.add("write program")
+
+      TodoList.complete(2)
+
+      [last] = TodoList.all
+      assert last == "write docs"
     end
   end
 end
