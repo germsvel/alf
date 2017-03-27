@@ -7,11 +7,15 @@ defmodule Alf.TodoListTest do
     {:ok, todo_list: pid}
   end
 
-  describe "start_link/0" do
-    test "Stores a list of items" do
-      list = TodoList.all
+  describe "all/0" do
+    test "returns a list of all items" do
+      TodoList.add("pick up eggs")
+      TodoList.add("return video")
 
-      assert list == []
+      [h, t] = TodoList.all
+
+      assert h == "pick up eggs"
+      assert t == "return video"
     end
   end
 
@@ -56,13 +60,15 @@ defmodule Alf.TodoListTest do
       assert last == "finish homework"
     end
 
-    test "keeps number of elements in list correctly" do
+    test "keeps order of elements in list correctly after additions and completions" do
       TodoList.add("write docs")
       TodoList.add("finish homework")
+      TodoList.add("do dishes")
       TodoList.complete(2)
       TodoList.add("write program")
 
       TodoList.complete(2)
+      TodoList.complete("write program")
 
       [last] = TodoList.all
       assert last == "write docs"

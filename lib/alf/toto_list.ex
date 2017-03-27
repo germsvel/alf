@@ -1,56 +1,39 @@
 defmodule Alf.TodoList do
-  alias Alf.Todo
-
-  defstruct items: %{}, next_position: 1
-
   @name __MODULE__
 
   def start_link do
-    Agent.start_link(fn -> %Alf.TodoList{} end, name: @name)
+    Agent.start_link(fn -> [] end, name: @name)
   end
 
   def all do
-    Agent.get(@name, fn list ->
-      Map.values(list.items)
+    Agent.get(@name, fn items ->
+      Enum.reverse(items)
     end)
   end
 
   def last do
-    Agent.get(@name, fn list ->
-      [desc|_] = Map.values(list.items)
-      desc
+    Agent.get(@name, fn [h|_t] ->
+      h
     end)
   end
 
   def add(desc) do
-    Agent.update(@name, fn list ->
-      items = Map.put(list.items, list.next_position, desc)
-      new_next_position = list.next_position + 1
-      %{list | items: items, next_position: new_next_position}
+    Agent.update(@name, fn items ->
+      [desc | items]
     end)
   end
 
   def complete(position) when is_integer(position) do
-    Agent.get_and_update(@name, fn list ->
-      value = Map.get(list.items, position)
-      items = Map.delete(list.items, position)
-      new_list = %{list | items: items}
+    Agent.update(@name, fn items ->
+      total = length(items)
 
-      {value, new_list}
+      List.delete_at(items, total - position)
     end)
   end
 
   def complete(desc) when is_binary(desc) do
-    Agent.get_and_update(@name, fn list ->
-      position = Map.values(list.items)
-               |> Enum.find_index(fn(x) -> x == desc end)
-               |> Kernel.+(1)
-
-      value = Map.get(list.items, position)
-      items = Map.delete(list.items, position)
-      new_list = %{list | items: items}
-
-      {value, new_list}
+    Agent.update(@name, fn items ->
+      List.delete(items, desc)
     end)
   end
 end
