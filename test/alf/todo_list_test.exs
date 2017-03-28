@@ -2,11 +2,6 @@ defmodule Alf.TodoListTest do
   use ExUnit.Case, async: true
   alias Alf.TodoList
 
-  setup do
-    {:ok, pid} = TodoList.start_link
-    {:ok, todo_list: pid}
-  end
-
   describe "all/0" do
     test "returns a list of all items" do
       TodoList.add("pick up eggs")
