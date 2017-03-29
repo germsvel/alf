@@ -36,4 +36,10 @@ defmodule Alf.TodoList do
       List.delete(items, desc)
     end)
   end
+
+  def clear_list do
+    Agent.update(@name, fn _ ->
+      []
+    end)
+  end
 end

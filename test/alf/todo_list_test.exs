@@ -2,8 +2,13 @@ defmodule Alf.TodoListTest do
   use ExUnit.Case, async: true
   alias Alf.TodoList
 
+  setup do
+    on_exit(&TodoList.clear_list/0)
+    {:ok, :ok}
+  end
+
   describe "all/0" do
-    test "returns a list of all items" do
+    test "returns list of all items in order they were added" do
       TodoList.add("pick up eggs")
       TodoList.add("return video")
 
@@ -15,7 +20,7 @@ defmodule Alf.TodoListTest do
   end
 
   describe "add/1" do
-    test "adds item to list" do
+    test "adds an item to the list" do
       TodoList.add("meet with clients")
 
       item = TodoList.last
@@ -58,11 +63,9 @@ defmodule Alf.TodoListTest do
     test "keeps order of elements in list correctly after additions and completions" do
       TodoList.add("write docs")
       TodoList.add("finish homework")
-      TodoList.add("do dishes")
       TodoList.complete(2)
       TodoList.add("write program")
 
-      TodoList.complete(2)
       TodoList.complete("write program")
 
       [last] = TodoList.all
