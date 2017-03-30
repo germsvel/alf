@@ -7,6 +7,25 @@ defmodule Alf.TodoListTest do
     {:ok, :ok}
   end
 
+  describe "save/0" do
+    test "stores list in file system" do
+      TodoList.add("pick up eggs")
+      TodoList.add("return video")
+
+      TodoList.save()
+
+      {:ok, text} = File.read("saved_todo_list")
+
+      assert text == """
+
+      To do
+      ========
+      [1] pick up eggs
+      [2] return video
+      """
+    end
+  end
+
   describe "all/0" do
     test "returns list of all items in order they were added" do
       TodoList.add("pick up eggs")
