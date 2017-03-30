@@ -7,6 +7,7 @@ defmodule Alf.StorageTest do
       Storage.store("hello world", "hello_world_file")
 
       {:ok, text} = File.read("hello_world_file")
+      File.rm("hello_world_file")
 
       assert text == "hello world"
     end

@@ -15,6 +15,7 @@ defmodule Alf.TodoListTest do
       TodoList.save()
 
       {:ok, text} = File.read("saved_todo_list")
+      File.rm("saved_todo_list")
 
       assert text == """
       To do

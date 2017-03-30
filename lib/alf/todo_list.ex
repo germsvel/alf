@@ -1,8 +1,8 @@
 defmodule Alf.TodoList do
-  @name __MODULE__
-
   alias Alf.Formatter
   alias Alf.Storage
+
+  @name __MODULE__
 
   def start_link do
     Agent.start_link(fn -> [] end, name: @name)
