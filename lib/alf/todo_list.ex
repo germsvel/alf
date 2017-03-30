@@ -5,6 +5,21 @@ defmodule Alf.TodoList do
     Agent.start_link(fn -> [] end, name: @name)
   end
 
+  def print do
+    IO.puts "\nTo do"
+    IO.puts "========"
+
+    all()
+    |> Enum.with_index()
+    |> Enum.each(&print_line/1)
+
+    IO.puts "\n"
+  end
+
+  defp print_line({desc, index}) do
+    IO.puts "[#{index + 1}] #{desc}"
+  end
+
   def all do
     Agent.get(@name, fn items ->
       Enum.reverse(items)
