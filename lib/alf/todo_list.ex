@@ -1,6 +1,8 @@
 defmodule Alf.TodoList do
   @name __MODULE__
 
+  alias Alf.Formatter
+
   def start_link do
     Agent.start_link(fn -> [] end, name: @name)
   end
@@ -14,36 +16,15 @@ defmodule Alf.TodoList do
     IO.puts list_to_text()
   end
 
+  defp list_to_text do
+    all() |> Formatter.list_to_text("To do")
+  end
+
   defp write_to_file(text) do
     {:ok, file} = File.open("saved_todo_list", [:write])
 
     IO.write(file, text)
     File.close(file)
-  end
-
-  defp list_to_text do
-    header = string_header()
-    indexed_items() |> append_items_to_text(header)
-  end
-
-  defp append_items_to_text([], text), do: text
-  defp append_items_to_text([h|t], text) do
-    new_text = text <> format_line(h) <> "\n"
-    append_items_to_text(t, new_text)
-  end
-
-  defp format_line({desc, index}), do: "[#{index + 1}] #{desc}"
-
-  defp string_header do
-    """
-
-    To do
-    ========
-    """
-  end
-
-  defp indexed_items do
-    all() |> Enum.with_index()
   end
 
   def all do

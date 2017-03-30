@@ -17,9 +17,8 @@ defmodule Alf.TodoListTest do
       {:ok, text} = File.read("saved_todo_list")
 
       assert text == """
-
       To do
-      ========
+      ======
       [1] pick up eggs
       [2] return video
       """
