@@ -2,29 +2,22 @@ defmodule Alf.TodoList do
   @name __MODULE__
 
   alias Alf.Formatter
+  alias Alf.Storage
 
   def start_link do
     Agent.start_link(fn -> [] end, name: @name)
   end
 
   def save do
-    list_to_text()
-    |> write_to_file()
+    all()
+    |> Formatter.list_to_text("To do")
+    |> Storage.store("saved_todo_list")
   end
 
   def print do
-    IO.puts list_to_text()
-  end
-
-  defp list_to_text do
-    all() |> Formatter.list_to_text("To do")
-  end
-
-  defp write_to_file(text) do
-    {:ok, file} = File.open("saved_todo_list", [:write])
-
-    IO.write(file, text)
-    File.close(file)
+    all()
+    |> Formatter.list_to_text("To do")
+    |> IO.puts()
   end
 
   def all do
