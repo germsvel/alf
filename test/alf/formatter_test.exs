@@ -29,5 +29,30 @@ defmodule Alf.FormatterTest do
       """
     end
   end
-end
 
+  describe "text_to_list/1" do
+    test "parses text into a list of items" do
+      text = """
+      [1] eggs
+      [2] bacon
+      """
+
+      list = Formatter.text_to_list(text)
+
+      assert list == ["eggs", "bacon"]
+    end
+
+    test "parses text with title into a list of items" do
+      text = """
+      Breakfast items
+      ======
+      [1] eggs
+      [2] bacon
+      """
+
+      list = Formatter.text_to_list(text)
+
+      assert list == ["eggs", "bacon"]
+    end
+  end
+end

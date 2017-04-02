@@ -8,6 +8,12 @@ defmodule Alf.TodoList do
     Agent.start_link(fn -> [] end, name: @name)
   end
 
+  def load_data do
+    Storage.get("saved_todo_list")
+    |> Formatter.text_to_list()
+    |> Enum.each(&add/1)
+  end
+
   def save do
     all()
     |> Formatter.list_to_text("To do")

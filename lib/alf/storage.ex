@@ -11,7 +11,7 @@ defmodule Alf.Storage do
   end
 
   def get(filename) do
-    File.read(@dir_name <> filename)
+    File.read!(@dir_name <> filename)
   end
 
   def clear_records do

@@ -11,7 +11,7 @@ defmodule Alf.StorageTest do
     test "stores text to given filename" do
       Storage.store("hello world", "hello_world_file")
 
-      {:ok, text} = Storage.get("hello_world_file")
+      text = Storage.get("hello_world_file")
 
       assert text == "hello world"
     end
@@ -23,7 +23,7 @@ defmodule Alf.StorageTest do
 
       Storage.clear_records
 
-      assert Storage.get("hello_world_file") == {:error, :enoent}
+      refute File.exists?("lists")
     end
   end
 end

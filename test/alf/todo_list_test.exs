@@ -7,6 +7,22 @@ defmodule Alf.TodoListTest do
     {:ok, :ok}
   end
 
+  describe "load_data/0" do
+    test "loads data from file system if any available" do
+      TodoList.add("pick up eggs")
+      TodoList.add("return video")
+      TodoList.save()
+      TodoList.clear_list()
+
+      TodoList.load_data()
+
+      [item1, item2] = TodoList.all()
+
+      assert item1 == "pick up eggs"
+      assert item2 == "return video"
+    end
+  end
+
   describe "save/0" do
     test "stores list in file system" do
       TodoList.add("pick up eggs")
@@ -14,7 +30,7 @@ defmodule Alf.TodoListTest do
 
       TodoList.save()
 
-      {:ok, text} = Alf.Storage.get("saved_todo_list")
+      text = Alf.Storage.get("saved_todo_list")
       Alf.Storage.clear_records
 
       assert text == """

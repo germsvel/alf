@@ -21,4 +21,20 @@ defmodule Alf.Formatter do
     ======
     """
   end
+
+
+  def text_to_list(""), do: []
+  def text_to_list(text) do
+    lines = String.split(text, "\n")
+    parse_items(lines, [])
+  end
+
+  defp parse_items([], list), do: Enum.reverse(list)
+  defp parse_items([""], list), do: parse_items([], list)
+  defp parse_items([h|t], list) do
+    case Regex.split(~r{(?<num>] )(?<desc>)}, h) do
+      [_num, desc] -> parse_items(t, [desc | list])
+      _ -> parse_items(t, list)
+    end
+  end
 end
