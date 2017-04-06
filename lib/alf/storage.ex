@@ -11,7 +11,10 @@ defmodule Alf.Storage do
   end
 
   def get(filename) do
-    File.read!(@dir_name <> filename)
+    case File.read(@dir_name <> filename) do
+      {:ok, text} -> text
+      _ -> ""
+    end
   end
 
   def clear_records do

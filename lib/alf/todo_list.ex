@@ -5,7 +5,9 @@ defmodule Alf.TodoList do
   @name __MODULE__
 
   def start_link do
-    Agent.start_link(fn -> [] end, name: @name)
+    result = Agent.start_link(fn -> [] end, name: @name)
+    load_data()
+    result
   end
 
   def load_data do

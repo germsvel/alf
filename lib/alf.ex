@@ -6,6 +6,7 @@ defmodule Alf do
 
     children = [
       worker(Alf.TodoList, []),
+      worker(Alf.AutoSaver, []),
     ]
 
     opts = [strategy: :one_for_one, name: Alf.Supervisor]
