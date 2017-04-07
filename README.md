@@ -35,7 +35,7 @@ To do
 
 ```
 
-Once you're done with a task, you cancomplete the item in your todo list by providing its position in the list or its description, 
+Once you're done with a task, you can complete the item in your todo list by providing its position in the list or its description, 
 
 ```elixir
 iex> complete 2
