@@ -1,6 +1,5 @@
 defmodule Alf.TodoList do
-  alias Alf.Formatter
-  alias Alf.Storage
+  alias Alf.{Formatter, Storage}
 
   @name __MODULE__
 
@@ -35,9 +34,7 @@ defmodule Alf.TodoList do
   end
 
   def last do
-    Agent.get(@name, fn [h|_t] ->
-      h
-    end)
+    Agent.get(@name, fn [h|_t] -> h end)
   end
 
   def add(desc) do
@@ -61,8 +58,6 @@ defmodule Alf.TodoList do
   end
 
   def clear_list do
-    Agent.update(@name, fn _ ->
-      []
-    end)
+    Agent.update(@name, fn _ -> [] end)
   end
 end
