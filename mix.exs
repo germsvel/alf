@@ -4,6 +4,7 @@ defmodule Alf.Mixfile do
   def project do
     [app: :alf,
      version: "0.1.0",
+     escript: escript(),
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
@@ -16,6 +17,10 @@ defmodule Alf.Mixfile do
   def application do
     [applications: [:logger],
      mod: {Alf, []}]
+  end
+
+  def escript do
+    [main_module: Alf.CLI]
   end
 
   # Dependencies can be Hex packages:

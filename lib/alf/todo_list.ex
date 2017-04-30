@@ -21,12 +21,6 @@ defmodule Alf.TodoList do
     |> Storage.store("saved_todo_list")
   end
 
-  def print do
-    all()
-    |> Formatter.list_to_text("To do")
-    |> IO.puts()
-  end
-
   def all do
     Agent.get(@name, fn items ->
       Enum.reverse(items)
