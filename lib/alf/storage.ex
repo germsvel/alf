@@ -1,5 +1,6 @@
 defmodule Alf.Storage do
-  @dir_name "lists/"
+  @dir_name Path.absname("lists") <> "/"
+
 
   def store(text, filename) do
     ensure_directory_is_created()
