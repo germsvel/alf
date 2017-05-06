@@ -22,7 +22,7 @@ defmodule Alf.Storage do
   end
 
   defp storage_name(filename) do
-    @dir_name <> filename <> Atom.to_string(Mix.env)
+    @dir_name <> filename
   end
 
   defp ensure_directory_is_created do
