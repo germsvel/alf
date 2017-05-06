@@ -1,8 +1,8 @@
 defmodule Alf.CLI do
   alias Alf.{TodoList, Formatter}
 
-  @switches [print: :boolean, add: :string, clear: :boolean, complete: :string, done: :string]
-  @aliases [c: :complete, d: :done, a: :add]
+  @switches [print: :boolean, add: :string, clear: :boolean, complete: :string, done: :string, help: :boolean]
+  @aliases [c: :complete, d: :done, a: :add, h: :help]
 
   def main(args \\ []) do
     args
@@ -10,7 +10,6 @@ defmodule Alf.CLI do
     |> response()
 
     save()
-    print()
   end
 
   defp parse_args([]), do: [print: true]
@@ -27,17 +26,44 @@ defmodule Alf.CLI do
     item
     |> String.to_integer()
     |> TodoList.complete()
+
+    print()
   end
 
   defp response([add: item]) do
     TodoList.add item
+
+    print()
   end
 
   defp response([clear: _]) do
     TodoList.clear_list()
+
+    print()
   end
 
   defp response([print: _]) do
+    print()
+  end
+
+  defp response([]), do: response([help: true])
+  defp response([help: _]) do
+    IO.puts """
+
+    alf - your todo list manager
+    ======================================================
+
+    Usage: alf [arguments]
+
+    Arguments:
+      --print                 # Print the current list
+      --add <item>            # Add item to list
+      --complete <itemNumber> # Remove item from list
+      --done  <itemNumber>    # Same as completing an item
+      --clear                 # Clear all items from list
+
+    ======================================================
+    """
   end
 
   defp save do
