@@ -17,6 +17,7 @@ defmodule Alf.Formatter do
   defp format_title(""), do: ""
   defp format_title(title) do
     """
+
     #{title}
     ======
     """

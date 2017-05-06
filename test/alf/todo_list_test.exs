@@ -34,6 +34,7 @@ defmodule Alf.TodoListTest do
       Alf.Storage.clear_records
 
       assert text == """
+
       To do
       ======
       [1] pick up eggs

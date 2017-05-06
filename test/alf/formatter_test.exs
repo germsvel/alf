@@ -9,6 +9,7 @@ defmodule Alf.FormatterTest do
       text = Formatter.list_to_text(list, "Breakfast items")
 
       assert text == """
+
       Breakfast items
       ======
       [1] eggs
