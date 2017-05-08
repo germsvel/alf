@@ -5,7 +5,7 @@ defmodule Alf do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Alf.TodoList, []),
+      worker(Alf.TodoList, [:"To do"]),
     ]
 
     opts = [strategy: :one_for_one, name: Alf.Supervisor]

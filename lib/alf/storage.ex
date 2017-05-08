@@ -1,7 +1,6 @@
 defmodule Alf.Storage do
   @dir_name Path.absname("lists") <> "/"
 
-
   def store(text, filename) do
     ensure_directory_is_created()
 
@@ -23,7 +22,10 @@ defmodule Alf.Storage do
   end
 
   defp storage_name(filename) do
-    @dir_name <> filename
+    filename
+    |> String.replace(" ", "_")
+    |> String.replace("/", "_")
+    |> String.replace_prefix("", @dir_name)
   end
 
   defp ensure_directory_is_created do
