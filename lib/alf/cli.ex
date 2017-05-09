@@ -1,5 +1,6 @@
 defmodule Alf.CLI do
   alias Alf.{TodoList, Formatter}
+  @list_name :"To do"
 
   @switches [print: :boolean, add: :string, clear: :boolean, complete: :string, done: :string, help: :boolean]
   @aliases [c: :complete, d: :done, a: :add, h: :help]
@@ -23,21 +24,19 @@ defmodule Alf.CLI do
 
   defp response([done: item]), do: response([complete: item])
   defp response([complete: item]) do
-    item
-    |> String.to_integer()
-    |> TodoList.complete()
+    TodoList.complete(@list_name, String.to_integer(item))
 
     print()
   end
 
   defp response([add: item]) do
-    TodoList.add item
+    TodoList.add(@list_name, item)
 
     print()
   end
 
   defp response([clear: _]) do
-    TodoList.clear_list()
+    TodoList.clear_list(@list_name)
 
     print()
   end
@@ -67,12 +66,12 @@ defmodule Alf.CLI do
   end
 
   defp save do
-    TodoList.save()
+    TodoList.save(@list_name)
   end
 
   defp print do
-    TodoList.all()
-    |> Formatter.list_to_text("To do")
+    TodoList.all(@list_name)
+    |> Formatter.list_to_text(@list_name)
     |> IO.puts()
   end
 end
