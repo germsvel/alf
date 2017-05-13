@@ -3,7 +3,7 @@ defmodule AlfTest do
   doctest Alf
 
   test "starts the todo list process" do
-    pid = Process.whereis(Alf.TodoList)
+    pid = Process.whereis(:"To do")
 
     assert Process.alive?(pid)
   end
