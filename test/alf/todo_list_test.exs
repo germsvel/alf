@@ -27,7 +27,7 @@ defmodule Alf.TodoListTest do
 
   describe "save/1" do
     test "stores list in file system", context do
-      name = :"To do test list"
+      name = context[:test]
       {:ok, _} = TodoList.start_link(name)
       TodoList.add(name, "pick up eggs")
       TodoList.add(name, "return video")
