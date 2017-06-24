@@ -2,57 +2,70 @@
 
 A little friend that handles your todo list.
 
+
+Note: Alf is still in its early stages so usage is a work in progress.
+
 ## Usage
 
-Alf is still in its early stages so usage is a work in progress. 
+Clone this repo and `cd` into your `alf`'s directory.
 
-Clone the repo and open up `iex`, 
+Let's add an item to your todo list,
 
 ```shell
-iex -S mix
+$ alf --add "PR review"
 ```
 
-The simplest way to use it is to `import` the todo list module, 
+And you should immediately see your todo list!
 
-```elixir
-iex> import Alf.TodoList
+```shell
+To do
+=====
+[1] PR review
 ```
 
-Now you should be good to edit your todo list: 
+Let's add a couple more things,
 
-```elixir
-iex> add "PR review"
-iex> add "Interview candidates"
-iex> add "Do research to implement X"
-
-iex> print()
+```shell
+$ alf --add "1-1 meeting"
+$ alf -a "finish feature"
+$ alf -a "Buy bread"
 
 To do
 ======
 [1] PR review
-[2] Interview candidates
-[3] Do research to implement X
+[2] 1-1 meeting
+[3] finish feature
+[4] Buy bread
 
 ```
 
-Once you're done with a task, you can complete the item in your todo list by providing its position in the list or its description, 
+Now let's check off the items in the list once we've completed them,
 
-```elixir
-iex> complete 2
-iex> print()
+```shell
+$ alf --complete 3
 
 To do
 ======
 [1] PR review
-[2] Do research to implement X
-
-iex> complete "PR review"
-iex> print()
-
-To do
-======
-[1] Do research to implement X
+[2] 1-1 meeting
+[3] Buy bread
 
 ```
 
-Alf automatically saves your todo list, so if you close out of `iex` and open a new session, you should see your todo list just the way you left it. 
+Typing `--complete` can get old very quickly, so you can use `-c` instead,
+
+```shell
+$ alf -c 2
+
+To do
+======
+[1] PR review
+[2] Buy bread
+
+```
+
+Alf automatically saves your todo list, so if you close out of your terminal
+and open a new session, you should see your todo list just the way you left it.
+
+For a full list of commands, please see `alf --help`
+
